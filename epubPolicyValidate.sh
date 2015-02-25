@@ -103,7 +103,7 @@ fi
 counter=0
 
 # Select all files with extension .epub
-for i in $(find $pdfRoot -type f -name *.epub)
+for i in $(find $epubRoot -type f -name *.epub)
 do
     epubName="$i"
     counter=$((counter+1))
