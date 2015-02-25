@@ -7,6 +7,10 @@ Simple shell script that demonstrates policy-based validation of EPUB documents 
 ## Author
 Johan van der Knijff, KB/National Library of the Netherlands
 
+## Note
+
+Demo adapted from similar demo for PDF: <https://github.com/openpreserve/pdfPolicyValidate>. Repo still contains some leftover stuff from that, which will be gradually adapted / removed.
+
 ## Dependencies
 - *java* (version?)
 - *Epubcheck*  (3.0.1), get it from: <https://github.com/IDPF/epubcheck/releases/tag/v3.0.1>
