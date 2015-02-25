@@ -123,7 +123,7 @@ do
         xsltproc --path $xslPath $xslPath/iso_svrl_for_xslt1.xsl xxx2.sch > xxx.xsl
     fi
     
-    xsltproc --path $xslPath xxx.xsl $outputPreflight > $outputSchematron
+    xsltproc --path $xslPath xxx.xsl $outputEpubcheck > $outputSchematron
     
     # Extract failed tests from Schematron output
     
@@ -163,7 +163,7 @@ done
 # **************
 # CLEAN-UP
 # **************
-rm xxx1.sch
-rm xxx2.sch
-rm xxx.xsl
-rm tmp.stderr
+# rm xxx1.sch
+# rm xxx2.sch
+# rm xxx.xsl
+# rm tmp.stderr
