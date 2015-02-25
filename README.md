@@ -1,17 +1,15 @@
-#PDF policy-based validation demo
+# EPUB policy-based validation demo
 
 ## About
 
-Simple shell script that demonstrates policy-based validation of PDF documents using [Apache Preflight](http://pdfbox.apache.org/) and Schematron. Each file with a .pdf extension in a user-defined directory tree is analysed with Apache Preflight, and the Preflight output is subsequently validated against a  user-specified schema (which represents a policy). Schematron validation is done using the [ISO Schematron "unofficial" reference implementation](http://code.google.com/p/schematron/) (included here in directory *iso-schematron-xslt1*) and the [xsltproc](http://xmlsoft.org/XSLT/xsltproc2.html) tool.
-
-Development partially supported by the [SCAPE](http://www.scape-project.eu/) Project. The SCAPE project is co-funded by the European Union under FP7 ICT-2009.4.1 (Grant Agreement number 270137).
+Simple shell script that demonstrates policy-based validation of EPUB documents using [Epubcheck](https://github.com/idpf/epubcheck) and Schematron. Each file with an .epub extension in a user-defined directory tree is analysed with Epubcheck, and the resulting output is subsequently validated against a  user-specified schema (which represents a policy). Schematron validation is done using the [ISO Schematron "unofficial" reference implementation](http://code.google.com/p/schematron/) (included here in directory *iso-schematron-xslt1*) and the [xsltproc](http://xmlsoft.org/XSLT/xsltproc2.html) tool.
 
 ## Author
 Johan van der Knijff, KB/National Library of the Netherlands
 
 ## Dependencies
 - *java* (version?)
-- JAR of *Apache Preflight* (2.0), get it from: [https://builds.apache.org/job/PDFBox-trunk/lastBuild/org.apache.pdfbox$preflight/](https://builds.apache.org/job/PDFBox-trunk/lastBuild/org.apache.pdfbox$preflight/)
+- JAR of *Epubcheck*  (3.0.1), get it from: <https://github.com/IDPF/epubcheck/releases/tag/v3.0.1>
 - *xsltproc* tool (part of [libxslt](http://xmlsoft.org/XSLT/EXSLT/index.html) library)
 - *xmllint* tool (part of [libxml](http://www.xmlsoft.org/)library)
 - *realpath* tool
@@ -22,20 +20,22 @@ If you're using Windows you can run this shell script within a [Cygwin](http://w
 
 ##Contents of this repo
 
-- **pdfPolicyValidate.sh**: demo script
+- **epubPolicyValidate.sh**: demo script
 
 - **iso-schematron-xslt1**: "unofficial" reference implementation of ISO Schematron, taken from [http://code.google.com/p/schematron/](http://code.google.com/p/schematron/)
 
 - **schemas**: example schemas (currently only one)
 
+<!--
 - **errorcounts.py**: post-processing script that produces counts of unique (per analysed PDF) error codes and failed Schematron assertions
 
 - **goGovdocsSelected.sh**: demonstrates combined use of *pdfPolicyValidate.sh* and *errorcounts.py*
+-->
 
 ## Command line use
 
 #### Usage
-    pdfPolicyValidate.sh rootDirectory policy
+    epubPolicyValidate.sh rootDirectory policy
 
 #### Positional arguments
 
@@ -46,16 +46,17 @@ If you're using Windows you can run this shell script within a [Cygwin](http://w
 ### Output 
 The script produces the following output files:
 
-- **index.csv**: comma-delimited text file with for each analysed PDF the paths to the corresponding Preflight and Schematron output files
-- **success.csv**: comma-delimited text file with for each analysed PDF the outcome of the policy-based validation (pass/fail)
-- **failed.csv**:  text file with all tests that failed for PDFs that failed the policy-based validation
+- **index.csv**: comma-delimited text file with for each analysed EPUB the paths to the corresponding Epubcheck and Schematron output files
+- **success.csv**: comma-delimited text file with for each analysed EPUB the outcome of the policy-based validation (pass/fail)
+- **failed.csv**:  text file with all tests that failed for EPUBs that failed the policy-based validation
 
-In addition, the raw output files of *Preflight* and the Schematron validation are written to directory *outRaw*. You should use *index.csv* to link each of these files to their corresponding *PDF*. 
+In addition, the raw output files of *Epubcheck* and the Schematron validation are written to directory *outRaw*. You should use *index.csv* to link each of these files to their corresponding *EPUB*. 
 
 #### Example
 
-`pdfPolicyValidate.sh govdocs_selected pdf_policy_preflight_test.sch`
+`epubPolicyValidate.sh myEpubs epub_policy_test.sch`
 
+<!--
 ## Post-processing
 The *errorcounts.py* script analyses the output of the above script, and calculates counts of reported Preflight errors and failed Schematron assertions.
 
@@ -99,7 +100,6 @@ The script writes its results to two comma-separated files:
 
 Note that for both files the counts are based on *unique* error codes / failed assertions per *PDF*. This means that if, for example, a *PDF* results in 8 occurrences of error *3.1.2*, it only increases the error count in *preflightErrorCounts.csv* by 1.
 
-##Funding
-This work was partially supported by the [SCAPE](http://www.scape-project.eu/) Project. The SCAPE project is co-funded by the European Union under FP7 ICT-2009.4.1 (Grant Agreement number 270137).
+-->
 
  
