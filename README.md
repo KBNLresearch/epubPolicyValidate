@@ -9,7 +9,7 @@ Johan van der Knijff, KB/National Library of the Netherlands
 
 ## Dependencies
 - *java* (version?)
-- JAR of *Epubcheck*  (3.0.1), get it from: <https://github.com/IDPF/epubcheck/releases/tag/v3.0.1>
+- *Epubcheck*  (3.0.1), get it from: <https://github.com/IDPF/epubcheck/releases/tag/v3.0.1>
 - *xsltproc* tool (part of [libxslt](http://xmlsoft.org/XSLT/EXSLT/index.html) library)
 - *xmllint* tool (part of [libxml](http://www.xmlsoft.org/)library)
 - *realpath* tool

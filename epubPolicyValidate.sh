@@ -1,18 +1,17 @@
 #!/bin/bash
 
-# Simple demo script that demonstrates minimal workflow for policy-based validation of PDF documents 
-# using Apache Preflight and Schematron.
+# Simple demo script that demonstrates minimal workflow for policy-based validation of EPUB documents 
+# using Epubcheck and Schematron.
 #
-# Each file with a .pdf extension in the directory tree is analysed with Apache Preflight, 
-# and the Preflight output is subsequently validated against a  user-specified schema (which represents a policy).
+# Each file with a .epub extension in the directory tree is analysed with Epubcheck , 
+# and the Epubcheck output is subsequently validated against a  user-specified schema (which represents a policy).
 #
 # Author: Johan van der Knijff, KB/National Library of the Netherlands
 #
 # Dependencies and requirements:
 #
 # - java
-# - JAR of Apache Preflight (2.0) - get it from:
-#        https://builds.apache.org/job/PDFBox-trunk/lastBuild/org.apache.pdfbox$preflight/
+# - Epubcheck  (3.0.1) 
 # - xsltproc (part of libxslt library)
 # - xmllint (part of libxml library)
 # - realpath tool
@@ -23,7 +22,7 @@
 # **************
 
 # Location of  Preflight jar -- update according to your local installation!
-preflightJar=/usr/local/SCAPE/tools/preflight/preflight-app-2.0.0-20140114.220308-114.jar
+epubcheckJar=/home/johan/kb/epub/epubcheck/epubcheck-3.0.1.jar
 
 # Do not edit anything below this line (unless you know what you're doing) 
 
@@ -39,7 +38,7 @@ xslPath=$instDir/iso-schematron-xslt1
 
 # Check command line args
 if [ "$#" -ne 2 ] ; then
-  echo "Usage: pdfPolicyValidate.sh rootDirectory policy" >&2
+  echo "Usage: epubPolicyValidate.sh rootDirectory policy" >&2
   exit 1
 fi
 
@@ -53,14 +52,14 @@ if ! [ -f "$2" ] ; then
   exit 1
 fi
 
-# PDF root directory
-pdfRoot="$1"
+# EPUB root directory
+epubRoot="$1"
 
 # Schema
 schema="$2"
 
 # **************
-# CREATE OUTPUT DIRECTORY FOR RAW PREFLIGHT / SCHEMATRON FILES
+# CREATE OUTPUT DIRECTORY FOR RAW EPUBCHECK / SCHEMATRON FILES
 # **************
 rawDir="outRaw"
 if ! [ -d $rawDir ] ; then
@@ -74,13 +73,13 @@ rawDir=$(realpath ./$rawDir)
 # OUTPUT FILES
 # **************
 
-# Links each PDF to corresponding Preflight / Schematron output file
+# Links each EPUB to corresponding Epubcheck / Schematron output file
 indexFile="index.csv"
 
-# File with results (pass/fail) of policy-based validation for each PDF 
+# File with results (pass/fail) of policy-based validation for each EPUB 
 successFile="success.csv"
 
-# File that summarises failed tests for PDFs that didn't pass policy-based validation
+# File that summarises failed tests for EPUBs that didn't pass policy-based validation
 failedTestsFile="failed.csv" 
 
 # Remove these files if they exist already (writing to them will be done in append mode!)
@@ -103,18 +102,18 @@ fi
 
 counter=0
 
-# Select all files with extension .pdf
-for i in $(find $pdfRoot -type f -name *.pdf)
+# Select all files with extension .epub
+for i in $(find $pdfRoot -type f -name *.epub)
 do
-    pdfName="$i"
+    epubName="$i"
     counter=$((counter+1))
     
     # Generate names for output files, based on counter
-    outputPreflight=$rawDir/"$counter"_preflight.xml
+    outputEpubcheck=$rawDir/"$counter"_epubcheck.xml
     outputSchematron=$rawDir/"$counter"_schematron.xml
     
-    # Run Preflight
-    java -jar $preflightJar xml $pdfName >$outputPreflight 2>tmp.stderr
+    # Run Epubcheck
+    java -jar $epubcheckJar $epubName -out $outputEpubcheck 2>tmp.stderr
     
     # Validate output using Schematron reference application
     if [ $counter == "1" ]; then
@@ -143,21 +142,21 @@ do
         failedTests="SchematronFailure"
     fi
     
-    # PDF passed policy-based validation if failedTests is empty 
+    # EPUB passed policy-based validation if failedTests is empty 
     if [ ! "$failedTests" ]
     then
         success="Pass"
     else
         success="Fail"
         # Failed tests to output file
-        echo $pdfName,$failedTests >> $failedTestsFile
+        echo $epubName,$failedTests >> $failedTestsFile
     fi
     
-    # Write index file (links Preflight and Schematron outputs to each PDF)
-    echo $pdfName,$outputPreflight,$outputSchematron >> $indexFile
+    # Write index file (links Epubcheck and Schematron outputs to each EPUB)
+    echo $epubName,$outputEpubcheck,$outputSchematron >> $indexFile
     
-    # Write success file (lists validation outcome for each PDF)
-    echo $pdfName,$success >> $successFile
+    # Write success file (lists validation outcome for each EPUB)
+    echo $epubName,$success >> $successFile
     
 done
 
