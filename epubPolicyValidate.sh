@@ -163,7 +163,8 @@ done
 # **************
 # CLEAN-UP
 # **************
-# rm xxx1.sch
-# rm xxx2.sch
-# rm xxx.xsl
-# rm tmp.stderr
+
+rm xxx1.sch
+rm xxx2.sch
+rm xxx.xsl
+rm tmp.stderr
