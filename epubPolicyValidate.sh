@@ -102,10 +102,12 @@ fi
 
 counter=0
 
-# Select all files with extension .epub
-for i in $(find $epubRoot -type f -name *.epub)
-do
-    epubName="$i"
+# Select all files with extension .epub.
+# Now works for filenames that contain whitespace using code adapted from:
+# http://stackoverflow.com/questions/7039130/bash-iterate-over-list-of-files-with-spaces/7039579#7039579
+
+while IFS= read -d $'\0' -r file ; do
+    epubName="$file"
     counter=$((counter+1))
     
     # Generate names for output files, based on counter
@@ -113,7 +115,7 @@ do
     outputSchematron=$rawDir/"$counter"_schematron.xml
     
     # Run Epubcheck
-    java -jar $epubcheckJar $epubName -out $outputEpubcheck 2>tmp.stderr
+    java -jar $epubcheckJar "$epubName" -out $outputEpubcheck 2>tmp.stderr
     
     # Validate output using Schematron reference application
     if [ $counter == "1" ]; then
@@ -158,7 +160,7 @@ do
     # Write success file (lists validation outcome for each EPUB)
     echo $epubName,$success >> $successFile
     
-done
+done < <(find $epubRoot -name '*.epub' -type f -print0)
 
 # **************
 # CLEAN-UP
