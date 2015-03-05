@@ -14,7 +14,6 @@
 # - Epubcheck  (3.0.1) 
 # - xsltproc (part of libxslt library)
 # - xmllint (part of libxml library)
-# - realpath tool
 # - If you're using Windows you can run this shell script within a Cygwin terminal: http://www.cygwin.com/
 
 # **************
@@ -22,7 +21,7 @@
 # **************
 
 # Location of  Preflight jar -- update according to your local installation!
-epubcheckJar=/home/johan/kb/epub/epubcheck/epubcheck-3.0.1.jar
+epubcheckJar=/usr/share/java/epubcheck.jar
 
 # Do not edit anything below this line (unless you know what you're doing) 
 
@@ -67,7 +66,8 @@ if ! [ -d $rawDir ] ; then
 fi
 
 # Normalise to absolute path
-rawDir=$(realpath ./$rawDir)
+# rawDir=$(realpath ./$rawDir)
+rawDir=$(readlink -f $rawDir)
 
 # **************
 # OUTPUT FILES
