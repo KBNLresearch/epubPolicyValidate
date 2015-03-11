@@ -21,6 +21,7 @@
 # **************
 
 # Location of  Preflight jar -- update according to your local installation!
+#epubcheckJar=/usr/share/java/epubcheck.jar
 epubcheckJar=/usr/share/java/epubcheck.jar
 
 # Do not edit anything below this line (unless you know what you're doing) 
