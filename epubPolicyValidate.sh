@@ -131,14 +131,13 @@ while IFS= read -d $'\0' -r file ; do
     # Extract failed tests from Schematron output
     
     # Line below extracts literal test
-    #failedTests=$(xmllint --xpath "//*[local-name()='schematron-output']/*[local-name()='failed-assert']/@test" $outputSchematron)
+    failedTests=$(xmllint --xpath "//*[local-name()='schematron-output']/*[local-name()='failed-assert']/@test" $outputSchematron)
     
-    # Line below extracts text description of failed tests (each wrapped in <svrl:text> element)
-    failedTests=$(xmllint --xpath "//*[local-name()='schematron-output']/*[local-name()='failed-assert']/*[local-name()='text']" $outputSchematron)
+    # Line below extracts text description of failed tests (each wrapped in <svrl:text> element, ugly but I've already spent too much time trying
+    # to get rid of them and all the solutions I've seen for this are ridiculously complicated and I have other things to do anyway)
+    #failedTests=$(xmllint --xpath "//*[local-name()='schematron-output']/*[local-name()='failed-assert']/*[local-name()='text']" $outputSchematron)
     
-    # Due to bug in Preflight sometimes non-valid XML is produced, which results in empty Schematron file.
-    # Workaround: check file size of Schematron output and 
-    
+    # This is just in case anything went wrong with the Schematron validation
     schematronFileSize=$(wc -c < $outputSchematron)
     
     if [ $schematronFileSize == 0 ]; then
@@ -152,14 +151,14 @@ while IFS= read -d $'\0' -r file ; do
     else
         success="Fail"
         # Failed tests to output file
-        echo $epubName,$failedTests >> $failedTestsFile
+        echo \"$epubName\",$failedTests >> $failedTestsFile
     fi
     
     # Write index file (links Epubcheck and Schematron outputs to each EPUB)
-    echo $epubName,$outputEpubcheck,$outputSchematron >> $indexFile
+    echo \"$epubName\",\"$outputEpubcheck\",\"$outputSchematron\" >> $indexFile
     
     # Write success file (lists validation outcome for each EPUB)
-    echo $epubName,$success >> $successFile
+    echo \"$epubName\",$success >> $successFile
     
 done < <(find $epubRoot -name '*.epub' -type f -print0)
 
