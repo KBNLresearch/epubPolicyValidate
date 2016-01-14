@@ -109,17 +109,33 @@ def main():
     myFiles = getFilesFromDir(dirIn)
         
     # Main processing loop; each item represents one epubcheck output file
+    
+    filesWithFallbackError = []
+    noFilesWithFallbackError = 0
        
     for thisFile in myFiles:
         uri, status, version, errors = getErrors(thisFile)
+        containsFallbackError = False
         
         if status == "Not well-formed":
             print(uri)
             print(status)
             print(version)
             for error in errors:
-                print(error)
+                if "A fallback must be specified" not in error:
+                    containsFallbackError = True
+                else:
+                    print(error)
+                
             print("----")
+        
+        if containsFallbackError == True:
+            noFilesWithFallbackError += 1
+            filesWithFallbackError.append(uri)
+        
+    print("Fallback error count: " + str(noFilesWithFallbackError))
+    
+    
                         
     """
     # Count occurrences for each error/exception

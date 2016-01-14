@@ -11,7 +11,7 @@
 # Dependencies and requirements:
 #
 # - java
-# - Epubcheck  (3.0.1) 
+# - Epubcheck  (4.0.1) 
 # - xsltproc (part of libxslt library)
 # - xmllint (part of libxml library)
 # - If you're using Windows you can run this shell script within a Cygwin terminal: http://www.cygwin.com/
@@ -20,9 +20,9 @@
 # CONFIGURATION
 # **************
 
-# Location of  Preflight jar -- update according to your local installation!
+# Location of Epubcheckjar -- update according to your local installation!
+epubcheckJar=/home/johan/epubcheck-4.0.1/epubcheck.jar
 #epubcheckJar=/usr/share/java/epubcheck.jar
-epubcheckJar=/usr/share/java/epubcheck.jar
 
 # Do not edit anything below this line (unless you know what you're doing) 
 
