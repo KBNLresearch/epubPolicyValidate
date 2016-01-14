@@ -20,7 +20,7 @@
   <!-- This rule rules out encrypted content, but permits font obfuscation-->  
   <s:pattern name="encryptedResources">
     <s:rule context="/jh:jhove/jh:repInfo/jh:messages">
-      <s:assert test="count(jh:message[contains(.,'cannot be decrypted')]) = 0">Contains encrypted resources</s:assert>
+      <s:assert test="count(jh:message[contains(.,'could not be decrypted')]) = 0">Contains encrypted resources</s:assert>
     </s:rule>
   </s:pattern>
 
@@ -31,5 +31,4 @@
     </s:rule>
   </s:pattern -->
   
-
 </s:schema>
