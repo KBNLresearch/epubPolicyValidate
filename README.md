@@ -13,7 +13,7 @@ Demo adapted from similar demo for PDF: <https://github.com/openpreserve/pdfPoli
 
 ## Dependencies
 - *java* (version?)
-- *Epubcheck*  (3.0.1), get it from: <https://github.com/IDPF/epubcheck/releases/tag/v3.0.1>
+- *Epubcheck*  (4.0.1), get it from: <https://github.com/IDPF/epubcheck/releases/tag/v4.0.1>
 - *xsltproc* tool (part of [libxslt](http://xmlsoft.org/XSLT/EXSLT/index.html) library)
 - *xmllint* tool (part of [libxml](http://www.xmlsoft.org/)library)
 - *realpath* tool
@@ -22,7 +22,7 @@ Depending on the Linux distribution you're using you may already have some (or a
 
 If you're using Windows you can run this shell script within a [Cygwin](http://www.cygwin.com/) terminal.
 
-##Contents of this repo
+## Contents of this repo
 
 - **epubPolicyValidate.sh**: demo script
 
